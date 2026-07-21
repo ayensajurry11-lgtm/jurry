@@ -172,7 +172,7 @@ function sampleImageOffsets(count, imageUrl, widthScale, heightScale, depth) {
 
 /* ---- create all logo shapes ------------------------------------ */
 async function createLogoShapes(count) {
-  const janosLogo = await sampleImageOffsets(count, '/models/janos-logo.png', 1.43, 1.63, 0.6);
+  const janosLogo = await sampleImageOffsets(count, `${import.meta.env.BASE_URL}models/janos-logo.png`, 1.43, 1.63, 0.6);
   return {
     facebook: janosLogo,
     linkedin: sampleGlyphOffsets(count, 'in', 2.0, 2.5, 0.6),

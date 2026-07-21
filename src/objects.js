@@ -53,8 +53,8 @@ const ASSET_MANIFEST = [
   },
   {
     name: 'mass-structure',
-    url: '/models/crystal-1.glb',
-    innerUrl: '/models/inner-crystal-1.glb',
+    url: `${import.meta.env.BASE_URL}models/crystal-1.glb`,
+    innerUrl: `${import.meta.env.BASE_URL}models/inner-crystal-1.glb`,
     position: new THREE.Vector3(-0.9, -14, 0),
     rotation: new THREE.Euler(0.1, 0.2, 0.4),
     scale: 0.15,
@@ -70,8 +70,8 @@ const ASSET_MANIFEST = [
   },
   {
     name: 'mass-core',
-    url: '/models/crystal-2.glb',
-    innerUrl: '/models/inner-crystal-2.glb',
+    url: `${import.meta.env.BASE_URL}models/crystal-2.glb`,
+    innerUrl: `${import.meta.env.BASE_URL}models/inner-crystal-2.glb`,
     position: new THREE.Vector3(1.1, -30, 0),
     rotation: new THREE.Euler(0.3, 0, 0),
     scale: 0.16,

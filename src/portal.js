@@ -10,7 +10,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { makeDesertStoneMaps } from './textures.js';
 
-const RING_MODEL_URL = '/models/portal-ring.glb';
+const RING_MODEL_URL = `${import.meta.env.BASE_URL}models/portal-ring.glb`;
 const RING_NATIVE_RADIUS = 1.467;
 
 const RING_SPECS = [
