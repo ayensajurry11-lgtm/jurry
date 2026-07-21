@@ -1,6 +1,6 @@
 /* ============================================================
    ARCTIC ICE CAVE — cold blue-white theme
-   J-ANOS GRAPHIX branded.
+   J-Anos branded.
     Frosted palette, icy tones, thin mono UI pinned to corners.
    ============================================================ */
 
@@ -12,6 +12,7 @@
   --aurora: #80e0b0;       /* aurora green accent */
   --ice-glow: #a0d8f0;     /* pale ice glow */
   --font-mono: "Consolas", "SF Mono", "Roboto Mono", monospace;
+  --site-version: 2;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
