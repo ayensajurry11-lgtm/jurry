@@ -115,14 +115,24 @@ export function createCrystalLabels(assets, camera, rig, onReveal) {
       const sx = (world.x * 0.5 + 0.5) * window.innerWidth;
       const sy = (-world.y * 0.5 + 0.5) * window.innerHeight;
 
-      // position text label
-      const tx = sx + LINE_OFFSET_X;
-      const ty = sy + LINE_OFFSET_Y;
+      // position text label. On phones the desktop -180px offset would
+      // shove wide titles off-screen, so use a smaller offset + a
+      // narrower char width, then CLAMP the label box inside the
+      // viewport so it's always fully readable.
+      const mobile = window.innerWidth < 560;
+      const charW = mobile ? 9 : 11;
+      const offX = mobile ? -70 : LINE_OFFSET_X;
+      const offY = mobile ? -34 : LINE_OFFSET_Y;
+      const labelW = lb.fullText.length * charW + 24;
+      let tx = sx + offX;
+      let ty = sy + offY;
+      tx = Math.max(10, Math.min(tx, window.innerWidth - labelW - 10));
+      ty = Math.max(10, Math.min(ty, window.innerHeight - 80));
       lb.root.style.transform = `translate(${tx}px, ${ty}px)`;
       lb.root.style.opacity = '1';
 
       // leader line: from label edge to crystal
-      lb.line.setAttribute('x1', tx + lb.fullText.length * 11 + 10);
+      lb.line.setAttribute('x1', tx + lb.fullText.length * charW + 10);
       lb.line.setAttribute('y1', ty + 18);
       lb.line.setAttribute('x2', sx);
       lb.line.setAttribute('y2', sy);

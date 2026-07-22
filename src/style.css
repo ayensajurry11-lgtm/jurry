@@ -25,7 +25,11 @@ body {
   font-family: var(--font-mono);
   overflow-x: hidden;
   overflow-y: auto;
+  -webkit-text-size-adjust: 100%;   /* stop iOS from inflating text */
+  text-size-adjust: 100%;
 }
+/* remove the 300ms tap delay on the tappable links */
+a, button { touch-action: manipulation; }
 
 /* ---- WebGL canvas [REQUIRED] ------------------------------- */
 #webgl {
@@ -194,11 +198,15 @@ body {
 .beat {
   position: relative;
   min-height: 100vh;
+  min-height: 100dvh;   /* dvh tracks the visible viewport so the scroll
+                            length stays correct when the mobile URL bar
+                            shows/hides (avoids the address-bar jump) */
   z-index: 5;
   pointer-events: none;
 }
 .beat--footer {
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -539,3 +547,76 @@ body {
 #site-manager::-webkit-scrollbar { width: 4px; }
 #site-manager::-webkit-scrollbar-track { background: transparent; }
 #site-manager::-webkit-scrollbar-thumb { background: rgba(200, 224, 244, 0.15); border-radius: 2px; }
+
+/* ============================================================
+   RESPONSIVE — phones & small screens
+   The scene itself is fluid (canvas fills the viewport, camera
+   aspect + renderer resize on every window change, dynamic LOD
+   drops resolution if the phone can't keep up). These rules just
+   reflow the DOM chrome so nothing crowds or overflows a phone.
+   ============================================================ */
+
+/* tablets / large phones */
+@media (max-width: 820px) {
+  .corner__manifesto { max-width: 180px; font-size: 9px; }
+  .footer__links { gap: 24px; }
+}
+
+/* phones */
+@media (max-width: 560px) {
+  .corner { gap: 8px; font-size: 8px; letter-spacing: 0.1em; line-height: 1.55; }
+  .corner--tl { top: 14px; left: 14px; }
+  .corner--bl { bottom: 14px; left: 14px; }
+
+  .logo { font-size: 16px; letter-spacing: 0.06em; }
+
+  /* the manifesto is a desktop flourish — drop it so it can't crowd
+     the logo or overlap the top edge on a narrow screen */
+  .corner--tr { display: none; }
+
+  .corner__sound { font-size: 8px; gap: 6px; }
+  .corner__hint  { font-size: 8px; }
+
+  /* footer social links: let them wrap and centre, bigger tap targets */
+  .footer__links {
+    gap: 6px 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0 12px;
+    margin-top: 62vh;
+    margin-top: 62dvh;
+  }
+  .footer__links a {
+    font-size: 11px;
+    padding: 12px 12px;         /* ~44px tall tap target */
+    letter-spacing: 0.1em;
+  }
+  .footer__credit {
+    margin-top: 2.4rem;
+    text-align: center;
+    padding: 0 20px;
+    line-height: 1.6;
+  }
+
+  /* crystal labels (JS also clamps their X to the viewport) */
+  .crystal-label__title { font-size: clamp(15px, 5.5vw, 22px); letter-spacing: 0.1em; }
+  .crystal-label__sub   { font-size: 8px; letter-spacing: 0.18em; }
+  .crystal-label__cta   { font-size: 9px; }
+  .crystal-label__link  { padding: 6px 8px; }
+
+  /* HUD callouts a touch smaller */
+  .hud__label, .hud__temp, .hud__cta { font-size: 10px; }
+
+  /* admin panel fills the phone instead of a fixed 360px slab */
+  #site-manager { width: 100vw; right: -100vw; }
+  #site-manager.is-open { right: 0; }
+
+  #loader-bar { font-size: 10px; letter-spacing: 0.3em; }
+}
+
+/* very small / landscape-short: keep corners from colliding vertically */
+@media (max-height: 480px) {
+  .corner--tl { top: 10px; }
+  .corner--bl { bottom: 10px; }
+  .footer__links { margin-top: 66vh; margin-top: 66dvh; }
+}

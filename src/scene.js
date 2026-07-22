@@ -84,7 +84,11 @@ export function createScene(canvas) {
   });
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  // Cap the starting pixel ratio LOWER on phones: a high-DPI phone
+  // (DPR 3) would otherwise render a massive buffer and stutter/crash
+  // before the dynamic-LOD kicks in. The LOD can still drop further.
+  const isMobile = matchMedia('(max-width: 560px), (pointer: coarse)').matches;
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.55;
 
